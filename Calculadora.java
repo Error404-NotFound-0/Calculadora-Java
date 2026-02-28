@@ -8,14 +8,43 @@ public class Calculadora {
     public static void main(String[] args) {
         System.out.println("---Calculadora Java---");
         
-        
-        double primeiro = n1(); 
-        String op = equacao();
-        double segundo = n2();
+        double res = resultado();
 
-        System.out.println("Resultado: " + primeiro + " " + op + " " + segundo);
+        System.out.println("Resultado: " + res);
+
+        main(args);
     }
 
+    public static double resultado() {
+        double a = n1();
+        String b = equacao();
+        double c = n2();
+        double res = 0;
+
+        switch (b){
+            case "-":
+                res = a - c;
+                break;
+            case "+":
+                res = a + c;
+                break;
+            case "/":
+                if (c != 0){
+                    res = a / c;
+                }
+                else {res = a;
+                }
+                break;
+            case "*":
+                res = a * c;
+                break;
+            default:
+                System.out.println("Operação não reconhecida.");
+                return resultado();
+        }
+        return res;
+
+    }
     
     public static double n1() {
         try {
@@ -24,23 +53,22 @@ public class Calculadora {
         } catch (InputMismatchException e) {
             System.out.println("Erro: Utilize apenas vírgulas para casas decimais.");
             leitor.next(); 
-            n1();
-            return 0;
+            return n1();
         }
     }
 
-    
     public static String equacao() {
         System.out.print("Digite a operação (+, -, *, /): ");
         String operacao = leitor.next();
-        
-        if (!"+-*/".contains(operacao)) {
-            System.out.println("Operador inválido!");
-            equacao();
-        }
-        return operacao;
-    }
 
+        if (operacao.equals("+") || operacao.equals("-") || operacao.equals("*") || operacao.equals("/")) {
+            return operacao;
+        } else {
+            
+            System.out.println("Operador inválido!");
+            return equacao();
+        }
+    }
     public static double n2() {
         try {
             System.out.print("Insira o segundo número: ");
@@ -48,8 +76,7 @@ public class Calculadora {
         } catch (InputMismatchException e) {
             System.out.println("Erro: Utilize apenas vírgulas para casas decimais.");
             leitor.next();
-            n2();
-            return 0;
+            return n2();
         }
     }
 }
